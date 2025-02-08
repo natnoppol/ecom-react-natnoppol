@@ -22,7 +22,9 @@ function Header() {
       <NavigationResonsive>
       <NavigationMenu>
         <NavigationLogo>
-        <span className="text-2xl font-bold text-primary-600">ShopHub</span>
+          <Link to="/" className="text-2xl font-bold text-primary-600 hover:text-primary-500 transition-colors">
+              ShopHub
+          </Link>
         </NavigationLogo>
         <Link to="/">Home</Link>
         <Link to="/contact">Contact</Link>
