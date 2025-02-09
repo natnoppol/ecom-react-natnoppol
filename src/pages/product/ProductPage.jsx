@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useCart } from '../../hooks/CartContext';
 import { Button } from '../../components/ui/button';
 
+import {
+  SingleProductContainer,
+  SingleProductResponsive,} from '../../components/ui/singleProduct'
+
 function ProductPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -29,23 +33,33 @@ function ProductPage() {
     return <div>Loading...</div>;
   }
 
+ 
   return (
-    <div>
-      <h1>{product.title}</h1>
-      <img
-        src={product.data.image?.url || '/default-image.jpg'}
-        alt={product.data.image?.alt || 'Product Image'}
-        width="200"
-      />
-      <p>{product.description}</p>
-      <p>Price: {product.discountedPrice} NOK</p>
-      {product.discountedPrice < product.price && (
-        <p style={{ color: 'red' }}>
-          Discount: {((1 - product.discountedPrice / product.price) * 100).toFixed(0)}% OFF
-        </p>
-      )}
-      <Button  onClick={() => addToCart(product)}>Add to Cart</Button>
-    </div>
+    <SingleProductContainer>
+      <SingleProductResponsive>
+        <div className='space-y-4'>
+          <div className="aspect-square bg-gray-100 dark:bg-gray-800 
+          rounded-xl overflow-hidden">
+          <img
+            src={product.data.image?.url || '/default-image.jpg'}
+            alt={product.data.image?.alt || 'Product Image'}
+            className='w-full h-full object-cover'
+          />
+          </div>
+          
+          <h1>{product.data.title}</h1>
+          <p>{product.description}</p>
+          <p>Price: {product.discountedPrice} NOK</p>
+          {product.discountedPrice < product.price && (
+            <p style={{ color: 'red' }}>
+              Discount: {((1 - product.discountedPrice / product.price) * 100).toFixed(0)}% OFF
+            </p>
+          )}
+          <Button  onClick={() => addToCart(product)}>Add to Cart</Button>
+        </div>
+      </SingleProductResponsive>
+    </SingleProductContainer>
+      
   );
 }
 
