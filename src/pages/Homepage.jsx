@@ -22,6 +22,7 @@ function Homepage() {
         }
         const data = await res.json();
         setProducts(data);
+        console.log(data)
       } catch (error) {
         setError(error.message);
       } finally {
@@ -58,6 +59,7 @@ function Homepage() {
                       <CardHeader>
                         <h3>{product.title}</h3>
                       </CardHeader>
+                      
                       <CardDescription>
                         <p className="text-primary-600 font-bold">Price: {product.discountedPrice} NOK</p>
                       </CardDescription>

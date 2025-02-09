@@ -7,6 +7,11 @@ import {
   FooterMenu,
 } from "../ui/footer";
 
+const navLinks = [
+  { to: "/", label: "Home"},
+  { to: "/contact", label: "contact"},
+];
+
 function Footer() {
   return (
     <FooterContainer>
@@ -19,12 +24,13 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-primary-800 dark:text-white mb-4">Quick Links</h3>
             <ul className="space-y-2 text-primary-700 dark:text-gray-300">
-                <li>
-                  <Link to="/" className="hover:text-primary-500 transition-colors">Home</Link>
-                </li>
-                <li>
-                <Link to="/contact" className="hover:text-primary-500 transition-colors">Contact</Link>
-                </li>
+                {navLinks.map((link, index) => (
+                  <li key ={index}>
+                    <Link to = {link.to} className="hover:text-primary-500 transition-colors">
+                    {link.label}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
 
