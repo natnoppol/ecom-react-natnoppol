@@ -55,13 +55,21 @@ function Homepage() {
                     alt={product.title || "Product Image"}
                     className="w-full h-48 object-cover mb-4"
                     />
-                    <div className="p-6">
+                    <div className="p-6 ">
                       <CardHeader>
                         <h3>{product.title}</h3>
                       </CardHeader>
-                      
+                      {product.discountedPrice !== product.price && (
+                        <div className="flex justify-center mt-2 bg-primary-100 text-primary-800 px-2 py-1 rounded-full text-xs 
+                        sm:1/2 md:1/2 lg:w-1/2">Discout: {product.discountedPrice} NOK</div>
+                      )}
                       <CardDescription>
-                        <p className="text-primary-600 font-bold">Price: {product.discountedPrice} NOK</p>
+                        <p className="text-primary-600 font-bold">
+                          Price:{" "}
+                          {(product.price === product.discountedPrice
+                            ? product.price : (product.price - product.discountedPrice).toFixed(2)
+                          )} NOK
+                        </p>
                       </CardDescription>
                     </div>
                 </CardContent>
