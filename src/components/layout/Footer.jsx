@@ -36,7 +36,7 @@ function Footer() {
 
           <div>
           <CartProvider>
-            <h3 class="text-lg font-semibold text-primary-800 dark:text-white mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-primary-800 dark:text-white mb-4">Contact Us</h3>
             <CartIcon />
           </CartProvider>
           </div>
