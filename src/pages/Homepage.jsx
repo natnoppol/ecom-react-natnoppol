@@ -6,7 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../components/ui/card"; // Corrected import path
+} from "../components/ui/card"; 
+import { PriceTag } from "../components/ui/priceTag"; 
 
 function Homepage() {
   const [products, setProducts] = useState([]);
@@ -64,12 +65,7 @@ function Homepage() {
                         sm:1/2 md:1/2 lg:w-1/2">Discout: {product.discountedPrice} NOK</div>
                       )}
                       <CardDescription>
-                        <p className="text-primary-600 font-bold">
-                          Price:{" "}
-                          {(product.price === product.discountedPrice
-                            ? product.price : (product.price - product.discountedPrice).toFixed(2)
-                          )} NOK
-                        </p>
+                        <PriceTag price={product.price} discountedPrice={product.discountedPrice} />
                       </CardDescription>
                     </div>
                 </CardContent>
