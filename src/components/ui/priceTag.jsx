@@ -23,5 +23,32 @@ const PriceTagForSingleProduct = ({ price, discountedPrice}) => {
         </p>
     );
 };
+const PriceTagForCartPage = ({ price, discountedPrice}) => {
 
-export {PriceTag, PriceTagForSingleProduct};
+    const finalPrice = 
+    price === discountedPrice ? price : (price - discountedPrice).toFixed(2);
+
+    return (
+        <td className="py-4">
+            {finalPrice} NOK
+        </td>
+    );
+};
+
+const PriceTagTotalForCartPage = ({ price, discountedPrice, quantity }) => {
+    const finalPrice =
+      price === discountedPrice
+        ? (price * quantity).toFixed(2) // Multiply by quantity if no discount
+        : ((price - discountedPrice) * quantity).toFixed(2); // Apply discount and multiply by quantity
+  
+    return (
+      <td className="py-4">
+        {finalPrice} NOK
+      </td>
+    );
+  };
+  
+  export default PriceTagTotalForCartPage;
+  
+
+export {PriceTag, PriceTagForSingleProduct, PriceTagForCartPage, PriceTagTotalForCartPage};
