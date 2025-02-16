@@ -50,7 +50,7 @@ function CartPage() {
 
 
                       return (
-                        <tr key={`${item.id}-${index}`} className="border-t">
+                        <tr key={`${item.data.id}-${index}`} className="border-t">
                           <td className="py-4">
                             <div className="flex items-center">
                               <img
@@ -73,7 +73,7 @@ function CartPage() {
                               <button
                                 className="border rounded-md py-2 px-4 mr-2"
                                 onClick={() =>
-                                  handleQuantityChange(item.id, quantity - 1)
+                                  handleQuantityChange(item.data.id, quantity - 1)
                                 }
                                 disabled={quantity <= 1}
                               >
@@ -83,7 +83,7 @@ function CartPage() {
                               <button
                                 className="border rounded-md py-2 px-4 ml-2"
                                 onClick={() =>
-                                  handleQuantityChange(item.id, quantity + 1)
+                                  handleQuantityChange(item.data.id, quantity + 1)
                                 }
                               >
                                 +
@@ -98,7 +98,7 @@ function CartPage() {
                           <td className="py-4">
                             <Button
                               variant="destructive"
-                              onClick={() => removeFromCart(item.id)}
+                              onClick={() => removeFromCart(item.data.id)}
                             >
                               Remove
                             </Button>
