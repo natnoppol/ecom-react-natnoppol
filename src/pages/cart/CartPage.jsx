@@ -1,27 +1,25 @@
 import { useCart } from "../../hooks/CartContext";
 import {
-  CheckoutBackground,
-  CheckoutContainer,
-  CheckoutResponsive,
-} from "../../components/ui/checkout";
+  CartBackground,
+  CartContainer,
+  CartResponsive,
+} from "../../components/ui/cart";
 
 import { Button } from "../../components/ui/button";
 import {
   PriceTagForCartPage,
   PriceTagTotalForCartPage,
 } from "../../components/ui/priceTag";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 function CartPage() {
-  const { cart, removeFromCart, updateCartQuantity, clearCart } = useCart();
+  const { cart, removeFromCart, updateCartQuantity } = useCart();
   const navigate = useNavigate();
-
+  
   const subtotal = cart.reduce((sum, item) => {
     const priceToUse = item.data.price - item.data.discountedPrice ; 
     return sum + (priceToUse * item.quantity); 
   }, 0);
-  
-
   const total = subtotal;
   
 
@@ -30,16 +28,15 @@ function CartPage() {
     updateCartQuantity(itemId, validQuantity);
   };
 
-  function handleCheckout() {
-    clearCart();
-    navigate('/CheckoutPage');
+  function handleCart() {
+    navigate('/checkout');
   }
 
   return (
-    <CheckoutBackground>
-      <CheckoutContainer>
+    <CartBackground>
+      <CartContainer>
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
-        <CheckoutResponsive>
+        <CartResponsive>
           <div className="md:w-3/4">
             <div className="bg-white rounded-lg shadow-md p-6 mb-4">
               <table className="w-full">
@@ -156,16 +153,16 @@ function CartPage() {
                 </div>
                 <Button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
-                  onClick={handleCheckout} 
+                  onClick={handleCart} 
                 >
                   Checkout
                 </Button>
               </div>
             </div>
           )}
-        </CheckoutResponsive>
-      </CheckoutContainer>
-    </CheckoutBackground>
+        </CartResponsive>
+      </CartContainer>
+    </CartBackground>
   );
 }
 
