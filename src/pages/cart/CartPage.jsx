@@ -144,12 +144,12 @@ function CartPage() {
                 <h2 className="text-lg font-semibold mb-4">Summary</h2>
                 <div className="flex justify-between mb-2">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{subtotal.toFixed(2)}NOK</span>
                 </div>
                 <hr className="my-2" />
                 <div className="flex justify-between mb-2">
                   <span className="font-semibold">Total</span>
-                  <span className="font-semibold">${total.toFixed(2)}</span>
+                  <span className="font-semibold">{total.toFixed(2)}NOK</span>
                 </div>
                 <Button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"

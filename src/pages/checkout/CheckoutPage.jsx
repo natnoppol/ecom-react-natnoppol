@@ -77,9 +77,9 @@ function CheckoutPage() {
           <div className="bg-white p-6 rounded-md max-lg:-order-1">
             <h3 className="text-lg font-bold text-gray-800">Summary</h3>
             <ul className="text-gray-800 mt-6 space-y-3">
-              <li className="flex flex-wrap gap-4 text-sm">Sub total <span className="ml-auto font-bold">${subtotal.toFixed(2)}</span></li>
+              <li className="flex flex-wrap gap-4 text-sm">Sub total <span className="ml-auto font-bold">{subtotal.toFixed(2)}NOK</span></li>
               <hr />
-              <li className="flex flex-wrap gap-4 text-base font-bold">Total <span className="ml-auto">${total.toFixed(2)}</span></li>
+              <li className="flex flex-wrap gap-4 text-base font-bold">Total <span className="ml-auto">{total.toFixed(2)}NOK</span></li>
             </ul>
           </div>
         </CheckoutResponsive>
