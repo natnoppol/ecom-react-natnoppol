@@ -28,10 +28,7 @@ export function CartProvider({ children }) {
       }
     });
   };
-  
-  
-  
-  
+
 
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.data.id !== productId));
@@ -47,12 +44,16 @@ export function CartProvider({ children }) {
       )
     );
   };
+
+  const clearCart =() =>{
+    setCart([]); 
+  }
   
 
 
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart,  updateCartQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart,  updateCartQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );
