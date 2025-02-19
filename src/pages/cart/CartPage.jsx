@@ -84,7 +84,7 @@ function CartPage() {
                           <td className="py-4">
                             <div className="flex items-center">
                               <button
-                                className="border rounded-md py-2 px-4 mr-2"
+                                className=" rounded-md py-2 px-4 mr-2"
                                 onClick={() =>
                                   handleQuantityChange(
                                     item.data.id,
