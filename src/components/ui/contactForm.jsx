@@ -14,7 +14,7 @@ ContactContainer.displayName = "ContactContainer"
 const ContactResponsive = React.forwardRef(({ className, ...props }, ref) => (
     <div
     ref={ref}
-    className={cn("grid sm:grid-cols-2 items-start gap-16 p-10 mx-auto max-w-4xl font-[sans-serif] bg-white rounded-lg shadow-md  mb-4 ", className)}
+    className={cn("grid sm:grid-cols-2 items-start gap-16 p-10 mx-auto max-w-4xl font-[sans-serif]  rounded-lg shadow-md  mb-4 dark:bg-white", className)}
     {...props} />
 ))
 ContactResponsive.displayName = "ContactResponsive"

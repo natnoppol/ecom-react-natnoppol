@@ -86,7 +86,7 @@ function ProductPage() {
       <div className="mt-16">
         <div className="border-b border-gray-200 dark:border-gray-800">
           <div className="flex gap-8">
-            <button className="px-4 py-2 text-sky-700 border-b-2 border-sky-700">
+            <button className="px-4 py-2 text-sky-700 border-b-2 border-sky-700 dark:text-white font-bold">
               Reviews
             </button>
           </div>
@@ -99,9 +99,9 @@ function ProductPage() {
                   <div>
                     {product.data.reviews.map((review) => (
                       <div key={review.id}>
-                        <h4 className="font-medium">{review.username}</h4>
+                        <h4 className="font-bold">{review.username}</h4>
                         <p>{review.comment}</p>
-                        <p className="text-gray-600 dark:text-gray-300">
+                        <p className="text-gray-600 dark:text-gray-300 font-semibold">
                           {review.description}
                         </p>
                       </div>

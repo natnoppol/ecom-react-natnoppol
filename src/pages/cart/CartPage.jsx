@@ -38,7 +38,7 @@ function CartPage() {
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
         <CartResponsive>
           <div className="md:w-3/4">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+            <div className="bg-white rounded-lg shadow-md p-6 mb-4 dark:text-black">
               <table className="w-full">
                 <thead>
                   <tr>
@@ -84,7 +84,7 @@ function CartPage() {
                           <td className="py-4">
                             <div className="flex items-center">
                               <button
-                                className=" rounded-md py-2 px-4 mr-2"
+                                className=" border rounded-md py-2 px-4 ml-2"
                                 onClick={() =>
                                   handleQuantityChange(
                                     item.data.id,
@@ -140,7 +140,7 @@ function CartPage() {
           </div>
           {cart.length > 0 && (
             <div className="md:w-1/4">
-              <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="bg-white rounded-lg shadow-md p-6 dark:text-black">
                 <h2 className="text-lg font-semibold mb-4">Summary</h2>
                 <div className="flex justify-between mb-2">
                   <span>Subtotal</span>
@@ -151,12 +151,12 @@ function CartPage() {
                   <span className="font-semibold">Total</span>
                   <span className="font-semibold">{total.toFixed(2)}NOK</span>
                 </div>
-                <Button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4 w-full"
                   onClick={handleCart} 
                 >
                   Checkout
-                </Button>
+                </button>
               </div>
             </div>
           )}

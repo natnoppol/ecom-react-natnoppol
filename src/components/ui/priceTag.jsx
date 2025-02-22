@@ -6,7 +6,7 @@ const PriceTag = ({ price, discountedPrice}) => {
     price === discountedPrice ? price : (price - discountedPrice).toFixed(2);
 
     return (
-        <p className="text-primary-600 font-bold">
+        <p className="font-bold text-primary-800 dark:text-white">
             Price: {finalPrice} NOK
         </p>
     );

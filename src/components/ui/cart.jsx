@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 const CartBackground = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("bg-gray-100 h-screen py-8", className)}
+    className={cn("h-screen py-8 ", className)}
     {...props} />
 ))
 CartBackground.displayName = "CartBackground"

@@ -14,7 +14,7 @@ CheckoutContainer.displayName = "CheckoutContainer"
 const CheckoutBackground = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("bg-purple-100 p-8 w-full max-w-5xl max-lg:max-w-xl mx-auto rounded-md", className)}
+    className={cn("bg-primary-100 p-8 w-full max-w-5xl max-lg:max-w-xl mx-auto rounded-md", className)}
     {...props} />
 ))
 CheckoutBackground.displayName = "CheckoutBackground"

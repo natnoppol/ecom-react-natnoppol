@@ -26,8 +26,8 @@ function Header() {
               ShopHub
           </Link>
         </NavigationLogo>
-        <Link to="/">Home</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/" className="font-semibold">Home</Link>
+        <Link to="/contact" className="font-semibold">Contact</Link>
         <CartProvider>
           <CartIcon />
         </CartProvider>

@@ -62,10 +62,10 @@ const ContactPage = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // If the form is valid, log the data to the console
+    const isValid = validateForm();
+    if (isValid) {
       console.log("Form submitted:", formData);
-      // Clear the form (optional)
+      setSuccessMessage("Your message has been sent successfully!");
       setFormData({
         fullName: "",
         subject: "",
@@ -73,9 +73,12 @@ const ContactPage = () => {
         body: "",
       });
       setErrors({});
-      setSuccessMessage("Your message has been sent successfully!");
+    } else {
+      setSuccessMessage("");
     }
   };
+  
+  
 
   useEffect(() => {
     setIsFormValid(validateForm());
@@ -85,10 +88,10 @@ const ContactPage = () => {
     <ContactContainer>
       <ContactResponsive>
         <div>
-          <h1 className="text-gray-800 text-3xl font-extrabold">Let's Talk</h1>
+          <h1 className="text-black text-3xl font-extrabold">Let's Talk</h1>
           <div className="contact-page">
-            <h1>Contact Us</h1>
-            <p className="text-sm text-gray-500 mt-4">
+            <h1 className="text-black font-semibold">Contact Us</h1>
+            <p className="text-sm text-black mt-4">
               If you can’t find the information you need in our Help articles,
               and would like to get in touch with us, we’re here to help..
             </p>
@@ -110,8 +113,8 @@ const ContactPage = () => {
                       />
                     </svg>
                   </div>
-                  <a className="text-[#007bff] text-sm ml-4">
-                    <small className="block">Mail</small>
+                  <a className="text-blue-900 text-sm ml-4">
+                    <small className="block font-semibold">Mail</small>
                     <strong>natnoppol@gmail.com</strong>
                   </a>
                 </li>
@@ -226,7 +229,7 @@ const ContactPage = () => {
           >
             Send Message
           </button>
-          {successMessage && <p className="text-green-600">{successMessage}</p>}
+          {successMessage && <p className="text-green-600 font-semibold">{successMessage}</p>}
         </form>
       </ContactResponsive>
     </ContactContainer>
