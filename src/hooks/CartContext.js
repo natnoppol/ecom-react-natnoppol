@@ -3,30 +3,37 @@ import { createContext, useState, useContext, useEffect } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+  const [cart, setCart] = useState([]);
 
+  // Load cart from localStorage on mount
   useEffect(() => {
-    console.log("Cart saved to localStorage:", cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      console.log("Cart loaded from localStorage:", savedCart); // Debug log
+      setCart(JSON.parse(savedCart)); // Set the cart from localStorage
+    } else {
+      console.log("No cart found in localStorage"); // Debug log if there's no cart in localStorage
+    }
+  }, []);
+
+  // Keep localStorage in sync with state
+  useEffect(() => {
+    if (cart.length > 0) {
+      console.log("Updating localStorage with cart:", cart); // Debug log
+      localStorage.setItem("cart", JSON.stringify(cart)); // Sync with localStorage
+    }
   }, [cart]);
 
+  const updateCart = (updatedCart) => {
+    setCart(updatedCart);
+  };
+
   const addToCart = (product) => {
-    console.log("Adding product:", product);
-
-    if (!product || !product.data || !product.data.id) {
-      console.error("Invalid product format", product);
-      return;
-    }
-
+    console.log("Adding product to cart:", product); // Debug log
     setCart((prevCart) => {
-      console.log("Current cart before update:", prevCart);
-
       const existingItem = prevCart.find((item) => item.data.id === product.data.id);
-
       let newCart;
+
       if (existingItem) {
         newCart = prevCart.map((item) =>
           item.data.id === product.data.id
@@ -37,31 +44,44 @@ export function CartProvider({ children }) {
         newCart = [...prevCart, { data: product.data, quantity: 1 }];
       }
 
-      console.log("Updated cart:", newCart);
+      console.log("New cart after add:", newCart); // Debug log
+      localStorage.setItem("cart", JSON.stringify(newCart)); // Update localStorage
       return newCart;
     });
   };
 
   const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.data.id !== productId));
+    console.log("Removing product from cart:", productId); // Debug log
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item.data.id !== productId);
+      console.log("New cart after remove:", updatedCart); // Debug log
+      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
+      return updatedCart;
+    });
   };
 
   const updateCartQuantity = (itemId, newQuantity) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
+    console.log("Updating quantity for item:", itemId, "New quantity:", newQuantity); // Debug log
+    setCart((prevCart) => {
+      const updatedCart = prevCart.map((item) =>
         item.data.id === itemId
           ? { ...item, quantity: newQuantity }
           : item
-      )
-    );
+      );
+      console.log("New cart after quantity update:", updatedCart); // Debug log
+      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
+      return updatedCart;
+    });
   };
 
   const clearCart = () => {
-    setCart([]);
+    console.log("Clearing cart"); // Debug log
+    setCart([]); 
+    localStorage.removeItem("cart"); // Remove cart from localStorage
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateCartQuantity, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateCartQuantity, clearCart, updateCart }}>
       {children}
     </CartContext.Provider>
   );

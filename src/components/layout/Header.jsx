@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CartProvider } from "../../hooks/CartContext";
 import CartIcon from "../../components/icon/CartIcon";
 import {
   NavigationContainer,
@@ -28,9 +27,7 @@ function Header() {
         </NavigationLogo>
         <Link to="/" className="font-semibold">Home</Link>
         <Link to="/contact" className="font-semibold">Contact</Link>
-        <CartProvider>
-          <CartIcon />
-        </CartProvider>
+        <CartIcon />
         <div className="flex items-center space-x-4">
             <input
               type="text"
