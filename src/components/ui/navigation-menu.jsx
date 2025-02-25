@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 const NavigationContainer = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg sticky top-0 z-50", className)}
+    className={cn("flex bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg lg:px-6 py-2.5 ", className)}
     {...props} />
 ))
 NavigationContainer.displayName = "NavigationContainer"
@@ -12,7 +12,7 @@ NavigationContainer.displayName = "NavigationContainer"
 const NavigationResonsive = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", className)}
+    className={cn("flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4", className)}
     {...props} />
 ))
 NavigationResonsive.displayName = "NavigationResonsive"
@@ -20,7 +20,7 @@ NavigationResonsive.displayName = "NavigationResonsive"
 const NavigationMenu = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex justify-between h-16 items-center", className)}
+    className={cn("flex items-center lg:order-2 gap-4", className)}
     {...props} />
 ))
 NavigationMenu.displayName = "NavigationMenu"
@@ -33,9 +33,18 @@ const NavigationLogo = React.forwardRef(({ className, ...props }, ref) => (
 ))
 NavigationLogo.displayName = "NavigationLogo"
 
+const NavigationMobile = React.forwardRef(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1", className)}
+    {...props} />
+))
+NavigationMobile.displayName = "NavigationMobile"
+
 export {
   NavigationContainer,
   NavigationResonsive,
   NavigationMenu,
   NavigationLogo,
+  NavigationMobile,
 };

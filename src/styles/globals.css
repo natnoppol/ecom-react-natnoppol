@@ -71,3 +71,16 @@
   font-weight: 600;
 }
 
+/* Tailwind CSS for mobile menu */
+.NavigationMobile ul {
+  margin-top: 1rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.NavigationMobile li {
+  width: 100%;
+}
+
+

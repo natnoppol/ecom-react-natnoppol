@@ -1,18 +1,10 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../hooks/CartContext";
-import { useEffect, useState } from "react";
 
 function CartIcon() {
   const { cart } = useCart();
-  const [totalItems, setTotalItems] = useState(0);
 
-  // Update totalItems whenever cart changes
-  useEffect(() => {
-    if (Array.isArray(cart)) {
-      const newTotal = cart.reduce((sum, item) => sum + item.quantity, 0);
-      setTotalItems(newTotal);
-    }
-  }, [cart]); // This effect will run when the cart changes
+  const uniqueItemCount = new Set(cart.map((item) => item.data.id)).size;
 
   // Memoized badge styles
   const badgeStyle = {
@@ -40,14 +32,10 @@ function CartIcon() {
         padding: "10px",
         fontWeight: "600",
       }}
-      aria-label={`View cart, ${totalItems > 0 ? `${totalItems} items` : "empty"}`}
+      aria-label={`View cart, ${uniqueItemCount > 0 ? `${uniqueItemCount} items` : "empty"}`}
     >
       🛒 Cart
-      {totalItems > 0 && (
-        <span style={badgeStyle} aria-live="polite">
-          {totalItems}
-        </span>
-      )}
+      {uniqueItemCount > 0 && <span style={badgeStyle}>{uniqueItemCount}</span>}
     </Link>
   );
 }
