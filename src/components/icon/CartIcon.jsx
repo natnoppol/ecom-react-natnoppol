@@ -1,10 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../../hooks/CartContext";
 
 function CartIcon() {
   const { cart } = useCart();
+  const location = useLocation(); 
 
   const uniqueItemCount = new Set(cart.map((item) => item.data.id)).size;
+
+  
+  const getNavLinkClass = (path) => {
+    return location.pathname === path
+      ? "text-white bg-primary-700 px-4 py-2 rounded-md font-semibold transition-all"
+      : "text-black dark:text-white px-4 py-2 font-semibold transition-all";
+  };
 
   // Memoized badge styles
   const badgeStyle = {
@@ -27,6 +35,7 @@ function CartIcon() {
   return (
     <Link
       to="/cart"
+      className={getNavLinkClass("/cart")} 
       style={{
         position: "relative",
         padding: "10px",

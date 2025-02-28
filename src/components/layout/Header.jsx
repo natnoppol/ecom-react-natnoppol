@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import CartIcon from "../../components/icon/CartIcon";
 import {
   NavigationContainer,
-  NavigationResonsive,
+  NavigationResponsive,
   NavigationMenu,
   NavigationLogo,
   NavigationMobile,
@@ -46,42 +46,39 @@ function Header() {
     };
   }, []);
 
-  const getNavLinkClass = (isActive) =>
-    isActive
-      ? "block font-semibold py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-      : "block font-semibold py-2 pr-4 pl-3 text-black rounded lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white";
+  useEffect(() => {
+    console.log("Mobile Menu Open:", isMenuOpen);
+    console.log("Current Path:", location.pathname);
+  }, [isMenuOpen, location]);
+  
+
+  const getNavLinkClass = (path) => {
+    return location.pathname === path
+      ? "text-white bg-primary-700 px-4 py-2 rounded-md font-semibold transition-all"
+      : "text-black dark:text-white px-4 py-2 font-semibold transition-all";
+  };
 
   return (
     <NavigationContainer>
-      <NavigationResonsive>
-        <NavigationLogo>
-          <Link
-            to="/"
-            className=" text-primary-600 hover:text-primary-500 transition-colors self-center text-2xl font-bold whitespace-nowrap dark:text-white "
-          >
-            ShopHub
-          </Link>
-        </NavigationLogo>
-
+      <NavigationLogo>
+        <Link
+          to="/"
+          className=" text-primary-600 hover:text-primary-500 transition-colors self-center text-2xl font-bold whitespace-nowrap dark:text-white "
+        >
+          ShopHub
+        </Link>
+      </NavigationLogo>
+      <NavigationResponsive>
         {/* Desktop Menu */}
         <NavigationMenu className="lg:flex hidden items-center space-x-6">
-          <Link to="/" className={getNavLinkClass(location.pathname === "/")}>
+          <Link to="/" className={getNavLinkClass("/")}>
             Home
           </Link>
-          <Link
-            to="/contact"
-            className={getNavLinkClass(location.pathname === "/contact")}
-          >
+          <Link to="/contact" className={getNavLinkClass("/contact")}>
             Contact
           </Link>
 
-          <CartIcon
-            className={
-              isActive
-                ? "block font-semibold py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-                : "block font-semibold py-2 pr-4 pl-3 text-white rounded lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-            }
-          />
+          <CartIcon className={getNavLinkClass("/cart")} />
 
           {/* Display Search Bar and Dark Mode Button on Desktop */}
           <div className="flex items-center space-x-6 lg:ml-8">
@@ -118,13 +115,9 @@ function Header() {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 transition-all duration-300 space-y-4">
+          <ul className="flex flex-col mt-4 space-y-4">
             <li>
-              <Link
-                to="/"
-                onClick={closeMenu}
-                className={getNavLinkClass(location.pathname === "/")}
-              >
+              <Link to="/" onClick={closeMenu} className={getNavLinkClass("/")}>
                 Home
               </Link>
             </li>
@@ -132,13 +125,15 @@ function Header() {
               <Link
                 to="/contact"
                 onClick={closeMenu}
-                className={getNavLinkClass(location.pathname === "/contact")}
+                className={getNavLinkClass("/contact")}
               >
                 Contact
               </Link>
             </li>
+
             <li>
-              <CartIcon />
+              <CartIcon className={getNavLinkClass("/cart")} />
+
             </li>
             {/* Search Bar and Dark Mode Button for Mobile */}
             <div className="flex items-center space-x-4 ">
@@ -169,9 +164,10 @@ function Header() {
             </div>
           </ul>
         </NavigationMobile>
-      </NavigationResonsive>
+      </NavigationResponsive>
 
       {/* Hamburger Menu Button */}
+
       <button
         onClick={toggleMenu}
         id="hamburger-menu-button"
