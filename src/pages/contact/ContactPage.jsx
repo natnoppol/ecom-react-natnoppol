@@ -1,88 +1,71 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ContactContainer,
   ContactResponsive,
 } from "../../components/ui/contactForm";
 
-const ContactPage = () => {
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-
-  // State for form fields
+const ContactForm = () => {
   const [formData, setFormData] = useState({
     fullName: "",
-    subject: "",
     email: "",
+    subject: "",
     body: "",
   });
 
-  // State for form errors
-  const [errors, setErrors] = useState({
-    fullName: "",
-    subject: "",
-    email: "",
-    body: "",
-  });
-
-  // Handle form field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  // Validate form
-  const validateForm = () => {
-    let formErrors = {};
-    let isValid = true;
-
-    if (formData.fullName.trim().length < 3) {
-      formErrors.fullName = "Full name must be at least 3 characters.";
-      isValid = false;
-    }
-    if (formData.subject.trim().length < 3) {
-      formErrors.subject = "Subject must be at least 3 characters.";
-      isValid = false;
-    }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      formErrors.email = "Please enter a valid email address.";
-      isValid = false;
-    }
-    if (formData.body.trim().length < 3) {
-      formErrors.body = "Message must be at least 3 characters.";
-      isValid = false;
-    }
-
-    setErrors(formErrors);
-    return isValid;
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const isValid = validateForm();
-    if (isValid) {
-      console.log("Form submitted:", formData);
-      setSuccessMessage("Your message has been sent successfully!");
-      setFormData({
-        fullName: "",
-        subject: "",
-        email: "",
-        body: "",
-      });
-      setErrors({});
-    } else {
-      setSuccessMessage("");
-    }
-  };
-  
-  
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [touched, setTouched] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setIsFormValid(validateForm());
-  }, [formData]); // Runs only when formData changes
+    validateForm();
+  }, [formData]);
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    // Validation checks for empty fields
+    if (touched.fullName && formData.fullName.trim().length < 3) {
+      newErrors.fullName = "Name must be at least 3 characters long.";
+    }
+    if (touched.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (touched.subject && formData.subject.trim().length < 3) {
+      newErrors.subject = "Subject must be at least 3 characters long.";
+    }
+    if (touched.body && formData.body.trim().length < 3) {
+      newErrors.body = "Message must be at least 3 characters long.";
+    }
+
+    setErrors(newErrors);
+    setIsFormValid(Object.keys(newErrors).length === 0);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched((prevTouched) => ({ ...prevTouched, [name]: true }));
+    validateForm();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (isFormValid) {
+      setIsSubmitting(true);
+      console.log("Form submitted:", formData);
+
+      setSuccessMessage("Form submitted successfully!"); // Set success message after form submission
+      setFormData({ fullName: "", email: "", subject: "", body: "" }); // Clear form fields
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <ContactContainer>
@@ -182,6 +165,7 @@ const ContactPage = () => {
             placeholder="Name"
             value={formData.fullName}
             onChange={handleChange}
+            onBlur={handleBlur}
             className="w-full rounded-md py-3 px-4 bg-gray-100 text-gray-800 text-sm outline-blue-500 focus:bg-transparent"
             aria-label="Full Name"
           />
@@ -193,6 +177,7 @@ const ContactPage = () => {
             placeholder="subject"
             value={formData.subject}
             onChange={handleChange}
+            onBlur={handleBlur}
             className="w-full rounded-md py-3 px-4 bg-gray-100 text-gray-800 text-sm outline-blue-500 focus:bg-transparent"
             aria-label="Subject"
           />
@@ -204,6 +189,7 @@ const ContactPage = () => {
             placeholder="email"
             value={formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             className="w-full rounded-md py-3 px-4 bg-gray-100 text-gray-800 text-sm outline-blue-500 focus:bg-transparent"
             aria-label="Email"
           />
@@ -214,6 +200,7 @@ const ContactPage = () => {
             placeholder="Message"
             value={formData.body}
             onChange={handleChange}
+            onBlur={handleBlur}
             className="w-full rounded-md px-4 bg-gray-100 text-gray-800 text-sm pt-3 outline-blue-500 focus:bg-transparent"
             rows="6"
             aria-label="Message"
@@ -222,18 +209,34 @@ const ContactPage = () => {
 
           <button
             type="submit"
-            disabled={!isFormValid}
+            disabled={
+              isSubmitting ||
+              !formData.fullName ||
+              !formData.email ||
+              !formData.subject ||
+              !formData.body ||
+              !isFormValid
+            }
             className={`text-white bg-blue-600 hover:bg-blue-700 tracking-wide rounded-md text-sm px-4 py-3 w-full !mt-6 ${
-              !isFormValid ? "opacity-50 cursor-not-allowed" : ""
+              !isFormValid ||
+              !formData.fullName ||
+              !formData.email ||
+              !formData.subject ||
+              !formData.body
+                ? "opacity-50 cursor-not-allowed"
+                : ""
             }`}
           >
-            Send Message
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
-          {successMessage && <p className="text-green-600 font-semibold">{successMessage}</p>}
+
+          {successMessage && (
+            <p className="text-green-600 font-semibold">{successMessage}</p>
+          )}
         </form>
       </ContactResponsive>
     </ContactContainer>
   );
 };
 
-export default ContactPage;
+export default ContactForm;
