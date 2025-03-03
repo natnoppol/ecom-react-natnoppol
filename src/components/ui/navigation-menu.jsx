@@ -5,7 +5,7 @@ const NavigationContainer = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "flex justify-between bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg lg:px-6 py-2.5",
+      "flex justify-between bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg lg:px-6 py-2.5 z-50",
       className
     )}
     {...props}

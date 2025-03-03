@@ -70,7 +70,7 @@ const ContactForm = () => {
   return (
     <ContactContainer>
       <ContactResponsive>
-        <div>
+        <div className="flex-basis-1/2 ">
           <h1 className="text-black text-3xl font-extrabold">Let's Talk</h1>
           <div className="contact-page">
             <h1 className="text-black font-semibold">Contact Us</h1>
@@ -157,7 +157,7 @@ const ContactForm = () => {
           </div>
         </div>
 
-        <form className="ml-auto space-y-4" onSubmit={handleSubmit}>
+        <form className="flex-basis-1/2 ml-auto space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"
             id="fullName"

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import CartIcon from "../../components/icon/CartIcon";
 import {
@@ -9,10 +9,62 @@ import {
   NavigationMobile,
 } from "../ui/navigation-menu";
 
+import FilteredProducts from "../../components/ui/filteredProducts";
+import { debounce } from "lodash";
+
 function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const location = useLocation();
+
+  // useRef to hold the search term value for debouncing
+  const searchInputRef = useRef(null);
+
+  // Debounced search term with debounce logic to reduce state updates
+  const handleSearchChange = useCallback(
+    debounce((e) => setSearchTerm(e.target.value), 500),
+    []
+  );
+
+  // Filter products based on the debounced search term
+  useEffect(() => {
+    const results = searchTerm
+      ? products.filter((product) =>
+          product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : products;
+
+    setFilteredProducts(results);
+  }, [searchTerm, products]); // Only run this effect when `searchTerm` or `products` change
+
+  // Fetch products from the API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://v2.api.noroff.dev/online-shop");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Fetched products:", data);
+
+        if (Array.isArray(data.data)) {
+          setProducts(data.data);
+          setFilteredProducts(data.data); // Update filteredProducts to fetched data
+        } else {
+          console.error("Expected an array of products but got:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const isActive = location.pathname === "/cart";
 
@@ -47,10 +99,11 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    console.log("Mobile Menu Open:", isMenuOpen);
-    console.log("Current Path:", location.pathname);
-  }, [isMenuOpen, location]);
-  
+    if (isMenuOpen) {
+      const firstLink = document.getElementById("mobile-menu-link");
+      firstLink?.focus();
+    }
+  }, [isMenuOpen]);
 
   const getNavLinkClass = (path) => {
     return location.pathname === path
@@ -60,10 +113,11 @@ function Header() {
 
   return (
     <NavigationContainer>
+      <FilteredProducts filteredProducts={filteredProducts} searchTerm={searchTerm} allProducts={products} />
       <NavigationLogo>
         <Link
           to="/"
-          className=" text-primary-600 hover:text-primary-500 transition-colors self-center text-2xl font-bold whitespace-nowrap dark:text-white "
+          className="text-primary-600 hover:text-primary-500 transition-colors self-center text-2xl font-bold whitespace-nowrap dark:text-white"
         >
           ShopHub
         </Link>
@@ -83,8 +137,15 @@ function Header() {
           {/* Display Search Bar and Dark Mode Button on Desktop */}
           <div className="flex items-center space-x-6 lg:ml-8">
             <input
+              ref={searchInputRef}
               type="text"
               placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => {
+                // Manually trigger debounced change
+                setSearchTerm(e.target.value);
+                handleSearchChange(e);
+              }}
               className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-400 transition-all"
             />
             <button
@@ -111,35 +172,35 @@ function Header() {
 
         {/* Mobile Menu */}
         <NavigationMobile
-          className={`lg:hidden flex justify-between items-center w-full ${
-            isMenuOpen ? "block" : "hidden"
-          }`}
+          className={`lg:hidden flex justify-between items-center w-full ${isMenuOpen ? "block" : "hidden"}`}
         >
           <ul className="flex flex-col mt-4 space-y-4">
             <li>
-              <Link to="/" onClick={closeMenu} className={getNavLinkClass("/")}>
+              <Link id="mobile-menu-link" to="/" onClick={closeMenu} className={getNavLinkClass("/")}>
                 Home
               </Link>
             </li>
             <li>
-              <Link
-                to="/contact"
-                onClick={closeMenu}
-                className={getNavLinkClass("/contact")}
-              >
+              <Link to="/contact" onClick={closeMenu} className={getNavLinkClass("/contact")}>
                 Contact
               </Link>
             </li>
 
             <li>
               <CartIcon className={getNavLinkClass("/cart")} />
-
             </li>
             {/* Search Bar and Dark Mode Button for Mobile */}
-            <div className="flex items-center space-x-4 ">
+            <div className="flex items-center space-x-4">
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => {
+                  // Manually trigger debounced change
+                  setSearchTerm(e.target.value);
+                  handleSearchChange(e);
+                }}
                 className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-400 transition-all"
               />
               <button
@@ -167,7 +228,6 @@ function Header() {
       </NavigationResponsive>
 
       {/* Hamburger Menu Button */}
-
       <button
         onClick={toggleMenu}
         id="hamburger-menu-button"
@@ -177,34 +237,12 @@ function Header() {
         aria-controls="mobile-menu"
       >
         {isMenuOpen ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         )}
       </button>

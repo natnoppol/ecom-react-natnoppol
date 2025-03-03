@@ -114,71 +114,11 @@ function ProductPage() {
           {/* Rating section */}
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              
-                {product.data.reviews.length > 0 && (
-  
-                    <div className="text-5xl font-bold text-sky-700">
-                      {product.data.reviews[0].rating}
-                    </div>
-                
-                )}
-                <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-sky-700"
-                            style={{ width: "90%" }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          28
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-sky-700"
-                            style={{ width: "70%" }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          9
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-sky-700"
-                            style={{ width: "40%" }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          4
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-sky-700"
-                            style={{ width: "20%" }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          1
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-sky-700"
-                            style={{ width: "10%" }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          1
-                        </span>
-                      </div>
-                    </div>
+              {product.data.reviews.length > 0 && (
+                <div className="text-5xl font-bold text-sky-700">
+                  Rating {product.data.reviews[0].rating}
+                </div>
+              )}
               
             </div>
           </div>

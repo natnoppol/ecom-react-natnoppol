@@ -83,4 +83,23 @@
   width: 100%;
 }
 
+.search-results {
+  max-height: 300px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  right: 0;
+}
+
+.no-results {
+  padding-top: 10px;
+}
+
+
+
+
+
+
+
 

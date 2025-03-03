@@ -6,7 +6,7 @@ import { cn } from "../../lib/utils";
 const CheckoutContainer = React.forwardRef(({ className, ...props }, ref) => (
     <div
     ref={ref}
-    className={cn("font-[sans-serif] lg:flex lg:items-center lg:justify-center lg:h-screen max-lg:py-4", className)}
+    className={cn("font-[sans-serif] lg:flex lg:items-center lg:justify-center lg:h-full lg:py-12 py-4", className)}
     {...props} />
 ))
 CheckoutContainer.displayName = "CheckoutContainer"

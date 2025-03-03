@@ -37,8 +37,8 @@ function CartPage() {
       <CartContainer>
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
         <CartResponsive>
-          <div className="md:w-3/4">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-4 dark:text-black">
+          <div className="w-full">
+            <div className="bg-white rounded-lg shadow-md p-6 mb-4 dark:text-black  flex items-center justify-center">
               <table className="w-full">
                 <thead>
                   <tr>
@@ -129,7 +129,7 @@ function CartPage() {
                     })
                   ) : (
                     <tr>
-                      <td colSpan="5" className="text-center py-4">
+                      <td colSpan="4" className="text-center py-8 text-xl text-gray-600 border-t border-gray-200">
                         Your cart is empty.
                       </td>
                     </tr>
