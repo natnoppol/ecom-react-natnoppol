@@ -83,7 +83,7 @@
   width: 100%;
 }
 
-.search-results {
+.search-results, .no-results {
   max-height: 300px;
   overflow-y: auto;
   position: absolute;
@@ -92,9 +92,7 @@
   right: 0;
 }
 
-.no-results {
-  padding-top: 10px;
-}
+
 
 
 

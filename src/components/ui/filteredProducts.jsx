@@ -35,7 +35,7 @@ const FilteredProducts = ({ filteredProducts, searchTerm, allProducts }) => {
       {searchTerm && displayProducts.length > 0 && isDropdownOpen && (
         <div
           ref={dropdownRef}
-          className="search-results absolute mt-2 w-full max-w-full bg-white shadow-lg rounded-md dark:text-black transition-all ease-in-out"
+          className="search-results  mt-2 w-full max-w-full bg-white shadow-lg rounded-md dark:text-black transition-all ease-in-out"
         >
           <ul>
             {displayProducts.map((product) => (
@@ -50,7 +50,7 @@ const FilteredProducts = ({ filteredProducts, searchTerm, allProducts }) => {
       )}
 
       {searchTerm && displayProducts.length === 0 && (
-        <div className="no-results mt-2 text-gray-500 dark:text-white text-center">
+        <div className="no-results mt-2 w-full max-w-full bg-white shadow-lg rounded-md dark:text-black transition-all ease-in-out">
           <p>No results found for "{searchTerm}"</p>
         </div>
       )}

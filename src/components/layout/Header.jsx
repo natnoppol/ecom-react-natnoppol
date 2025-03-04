@@ -19,6 +19,22 @@ function Header() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const location = useLocation();
+  const menuRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    }
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   // useRef to hold the search term value for debouncing
   const searchInputRef = useRef(null);
@@ -113,7 +129,11 @@ function Header() {
 
   return (
     <NavigationContainer>
-      <FilteredProducts filteredProducts={filteredProducts} searchTerm={searchTerm} allProducts={products} />
+      <FilteredProducts
+        filteredProducts={filteredProducts}
+        searchTerm={searchTerm}
+        allProducts={products}
+      />
       <NavigationLogo>
         <Link
           to="/"
@@ -121,10 +141,51 @@ function Header() {
         >
           ShopHub
         </Link>
+        {/* Hamburger Menu Button */}
+        <button
+          onClick={toggleMenu}
+          id="hamburger-menu-button"
+          className="lg:hidden md:hidden p-2 rounded-md text-primary-600 hover:text-primary-700 dark:text-white dark:hover:text-primary-400 transition-colors"
+          aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+        >
+          {isMenuOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
+        </button>
       </NavigationLogo>
       <NavigationResponsive>
         {/* Desktop Menu */}
-        <NavigationMenu className="lg:flex hidden items-center space-x-6">
+        <NavigationMenu>
           <Link to="/" className={getNavLinkClass("/")}>
             Home
           </Link>
@@ -135,7 +196,7 @@ function Header() {
           <CartIcon className={getNavLinkClass("/cart")} />
 
           {/* Display Search Bar and Dark Mode Button on Desktop */}
-          <div className="flex items-center space-x-6 lg:ml-8">
+          <div className="lg:flex md:flex hidden items-center space-x-6">
             <input
               ref={searchInputRef}
               type="text"
@@ -146,7 +207,7 @@ function Header() {
                 setSearchTerm(e.target.value);
                 handleSearchChange(e);
               }}
-              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-400 transition-all"
+              className="px-4 py-2 rounded-lg border border-gray-300  dark:text-black focus:ring-2 focus:ring-primary-400 transition-all"
             />
             <button
               onClick={toggleDarkMode}
@@ -172,16 +233,28 @@ function Header() {
 
         {/* Mobile Menu */}
         <NavigationMobile
-          className={`lg:hidden flex justify-between items-center w-full ${isMenuOpen ? "block" : "hidden"}`}
+          ref={menuRef}
+          className={`lg:hidden ${
+            isMenuOpen ? "flex" : "hidden"
+          } justify-between items-center w-full`}
         >
           <ul className="flex flex-col mt-4 space-y-4">
             <li>
-              <Link id="mobile-menu-link" to="/" onClick={closeMenu} className={getNavLinkClass("/")}>
+              <Link
+                id="mobile-menu-link"
+                to="/"
+                onClick={closeMenu}
+                className={getNavLinkClass("/")}
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/contact" onClick={closeMenu} className={getNavLinkClass("/contact")}>
+              <Link
+                to="/contact"
+                onClick={closeMenu}
+                className={getNavLinkClass("/contact")}
+              >
                 Contact
               </Link>
             </li>
@@ -201,7 +274,7 @@ function Header() {
                   setSearchTerm(e.target.value);
                   handleSearchChange(e);
                 }}
-                className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-400 transition-all"
+                className="px-4 py-2 rounded-lg border border-gray-300  dark:text-black focus:ring-2  focus:ring-primary-400  transition-all"
               />
               <button
                 onClick={toggleDarkMode}
@@ -226,26 +299,6 @@ function Header() {
           </ul>
         </NavigationMobile>
       </NavigationResponsive>
-
-      {/* Hamburger Menu Button */}
-      <button
-        onClick={toggleMenu}
-        id="hamburger-menu-button"
-        className="lg:hidden p-2 rounded-md text-primary-600 hover:text-primary-700 dark:text-white dark:hover:text-primary-400 transition-colors"
-        aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
-        aria-expanded={isMenuOpen}
-        aria-controls="mobile-menu"
-      >
-        {isMenuOpen ? (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        )}
-      </button>
     </NavigationContainer>
   );
 }
