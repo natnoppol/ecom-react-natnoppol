@@ -21,7 +21,7 @@ CartContainer.displayName = "CartContainer"
 const CartResponsive = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col md:flex-row gap-4 justify-center", className)}
+    className={cn("flex flex-col md:flex-row gap-4 justify-center ", className)}
     {...props} />
 ))
 CartResponsive.displayName = "CartResponsive"

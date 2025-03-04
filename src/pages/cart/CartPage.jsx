@@ -38,7 +38,7 @@ function CartPage() {
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
         <CartResponsive>
           <div className="w-full">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-4 dark:text-black  flex items-center justify-center">
+            <div className="flex items-center justify-center bg-white rounded-lg shadow-md p-6 mb-4 dark:text-black">
               <table className="w-full">
                 <thead>
                   <tr>
@@ -48,7 +48,7 @@ function CartPage() {
                     <th className="text-left font-semibold">Total</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="flex-1">
                   {cart?.length > 0 ? (
                     cart.map((item, index) => {
                       const price = parseFloat(item.data.price) || 0; // Ensure price is a valid number
@@ -62,7 +62,7 @@ function CartPage() {
                       return (
                         <tr
                           key={`${item.data.id}-${index}`}
-                          className="border-t"
+                          className="border-b border-gray-200"
                         >
                           <td className="py-4">
                             <div className="flex items-center">
@@ -139,7 +139,7 @@ function CartPage() {
             </div>
           </div>
           {cart.length > 0 && (
-            <div className="md:w-1/4">
+            <div className="md:w-1/3">
               <div className="bg-white rounded-lg shadow-md p-6 dark:text-black">
                 <h2 className="text-lg font-semibold mb-4">Summary</h2>
                 <div className="flex justify-between mb-2">
