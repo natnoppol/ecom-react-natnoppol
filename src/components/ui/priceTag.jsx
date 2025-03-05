@@ -42,9 +42,7 @@ const PriceTagTotalForCartPage = ({ price, discountedPrice, quantity }) => {
         : ((price - discountedPrice) * quantity).toFixed(2); // Apply discount and multiply by quantity
   
     return (
-      <td className="py-4">
-        {finalPrice} NOK
-      </td>
+      <p className="text-base font-bold text-gray-900 dark:text-white">{finalPrice} NOK</p>
     );
   };
   
