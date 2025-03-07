@@ -45,6 +45,7 @@ function Header() {
     debounce((e) => {
       setSearchTerm(e.target.value);
     }, 500),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setSearchTerm] 
   );
 
