@@ -176,9 +176,11 @@ function CartPage() {
                   );
                 })
               ) : (
-                <p className="text-center py-8 text-xl text-gray-600">
-                  Your cart is empty.
-                </p>
+                <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                  <p className="text-center py-8 text-xl text-gray-600">
+                    Your cart is empty.
+                  </p>
+                </div>
               )}
             </div>
           </CartLeftContainer>
