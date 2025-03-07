@@ -5,7 +5,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "../ui/card"; 
 import { PriceTag } from "../ui/priceTag"; 
 

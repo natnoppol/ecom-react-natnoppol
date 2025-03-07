@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
   CardTitle,
 } from "../components/ui/card"; 
-import { PriceTag } from "../components/ui/priceTag"; 
 import Product from "../components/ui/product";
 
 function Homepage() {
