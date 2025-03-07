@@ -135,7 +135,7 @@ const ContactForm = () => {
           </button>
 
           {successMessage && (
-            <p className="text-green-600 font-semibold">{successMessage}</p>
+            <p className="text-green-800 font-semibold">{successMessage}</p>
           )}
         </form>
       </ContactResponsive>
