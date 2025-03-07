@@ -13,7 +13,7 @@ import FilteredProducts from "../../components/ui/filteredProducts";
 import { debounce } from "lodash";
 
 function Header() {
-  const [setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -82,7 +82,6 @@ function Header() {
     fetchProducts();
   }, []);
 
-  const isActive = location.pathname === "/cart";
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -93,7 +92,7 @@ function Header() {
   const toggleDarkMode = useCallback(() => {
     setIsDarkMode((prev) => !prev);
     document.documentElement.classList.toggle("dark");
-  }, []);
+  }, [setIsDarkMode]);
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev);
