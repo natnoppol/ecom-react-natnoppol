@@ -40,12 +40,11 @@ function Header() {
   // useRef to hold the search term value for debouncing
   const searchInputRef = useRef(null);
 
-  // Debounced search term with debounce logic to reduce state updates
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleSearchChange = useCallback(
     debounce((e) => {
       setSearchTerm(e.target.value);
     }, 500),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setSearchTerm] 
   );
 
