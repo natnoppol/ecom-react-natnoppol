@@ -13,6 +13,7 @@ import FilteredProducts from "../../components/ui/filteredProducts";
 import { debounce } from "lodash";
 
 function Header() {
+  // eslint-disable-next-line no-unused-vars
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,7 +45,7 @@ function Header() {
     debounce((e) => {
       setSearchTerm(e.target.value);
     }, 500),
-    [setSearchTerm]
+    [setSearchTerm] 
   );
 
   // Filter products based on the debounced search term
