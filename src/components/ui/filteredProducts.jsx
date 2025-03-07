@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const FilteredProducts = ({ filteredProducts, searchTerm, allProducts }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const displayProducts = searchTerm ? filteredProducts : [];
+  const displayProducts = useMemo(() => {
+    return searchTerm ? filteredProducts : [];
+  }, [searchTerm, filteredProducts]);
+
 
   // Close dropdown if clicked outside
   useEffect(() => {

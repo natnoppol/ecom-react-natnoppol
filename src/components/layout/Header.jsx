@@ -41,8 +41,10 @@ function Header() {
 
   // Debounced search term with debounce logic to reduce state updates
   const handleSearchChange = useCallback(
-    debounce((e) => setSearchTerm(e.target.value), 500),
-    []
+    debounce((e) => {
+      setSearchTerm(e.target.value);
+    }, 500),
+    [setSearchTerm]
   );
 
   // Filter products based on the debounced search term
