@@ -23,17 +23,7 @@ const PriceTagForSingleProduct = ({ price, discountedPrice}) => {
         </p>
     );
 };
-const PriceTagForCartPage = ({ price, discountedPrice}) => {
 
-    const finalPrice = 
-    price === discountedPrice ? price : (price - discountedPrice).toFixed(2);
-
-    return (
-        <td className="py-4">
-            {finalPrice} NOK
-        </td>
-    );
-};
 
 const PriceTagTotalForCartPage = ({ price, discountedPrice, quantity }) => {
     const finalPrice =
@@ -49,4 +39,4 @@ const PriceTagTotalForCartPage = ({ price, discountedPrice, quantity }) => {
   export default PriceTagTotalForCartPage;
   
 
-export {PriceTag, PriceTagForSingleProduct, PriceTagForCartPage, PriceTagTotalForCartPage};
+export {PriceTag, PriceTagForSingleProduct, PriceTagTotalForCartPage};

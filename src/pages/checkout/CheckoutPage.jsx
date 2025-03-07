@@ -18,14 +18,13 @@ function CheckoutPage() {
   }, 0);
   const total = subtotal;
 
-  // จัดการกับการส่งฟอร์ม (checkout)
+
   function handleCheckout(e) {
     e.preventDefault();
     clearCart();
     navigate("/checkout-success");
   }
 
-  // นำทางกลับไปที่หน้าตะกร้า
   function prevToCart() {
     navigate("/cart");
   }

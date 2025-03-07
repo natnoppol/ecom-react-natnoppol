@@ -50,10 +50,10 @@ const ContactForm = () => {
                       />
                     </svg>
                   </div>
-                  <a className="text-blue-900 text-sm ml-4">
+                  <div className="text-blue-900 text-sm ml-4">
                     <small className="block font-semibold">Mail</small>
                     <strong>natnoppol@gmail.com</strong>
-                  </a>
+                  </div>
                 </li>
               </ul>
             </div>

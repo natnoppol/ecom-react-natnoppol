@@ -13,7 +13,7 @@ import FilteredProducts from "../../components/ui/filteredProducts";
 import { debounce } from "lodash";
 
 function Header() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);

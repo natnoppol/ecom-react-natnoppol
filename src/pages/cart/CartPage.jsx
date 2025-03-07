@@ -5,7 +5,6 @@ import {
   CartRightContainer,
 } from "../../components/ui/cart";
 import {
-  PriceTagForCartPage,
   PriceTagTotalForCartPage,
 } from "../../components/ui/priceTag";
 import { Link, useNavigate } from "react-router-dom";
