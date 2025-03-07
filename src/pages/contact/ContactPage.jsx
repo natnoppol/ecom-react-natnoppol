@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 const ContactForm = () => {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting, isValid } } = useForm({
     mode: 'onChange',
+    defaultValues: { name: "", subject: "", email: "", message: "" },
   });
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -126,16 +127,28 @@ const ContactForm = () => {
           />
           {errors.message && <p className="error">{errors.message.message}</p>}
 
+            {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting || !isValid}
-            className="text-white bg-blue-600 hover:bg-blue-700 tracking-wide rounded-md text-sm px-4 py-3 w-full mt-6"
+            className={`w-full rounded-md px-4 py-3 text-sm text-white tracking-wide mt-6 ${
+              isSubmitting || !isValid
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
 
+          {/* Success/Error Message */}
           {successMessage && (
-            <p className="text-green-800 font-semibold">{successMessage}</p>
+            <p
+              className={`font-semibold text-sm mt-2 ${
+                successMessage.includes("error") ? "text-red-600" : "text-green-800"
+              }`}
+            >
+              {successMessage}
+            </p>
           )}
         </form>
       </ContactResponsive>
