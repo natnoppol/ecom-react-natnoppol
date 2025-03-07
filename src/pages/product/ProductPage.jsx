@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../../hooks/CartContext";
 import { PriceTagForSingleProduct } from "../../components/ui/priceTag";
@@ -14,7 +14,8 @@ function ProductPage() {
   const [addedToCart, setAddedToCart] = useState(false);
 
   // Async function to fetch the product data
-  const fetchProduct = async () => {
+  // Memoize fetchProduct with useCallback
+  const fetchProduct = useCallback(async () => {
     try {
       const res = await fetch(`https://v2.api.noroff.dev/online-shop/${id}`);
       const data = await res.json();
@@ -22,12 +23,12 @@ function ProductPage() {
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
-  };
+  }, [id]);
 
-  // Call the fetchProduct function when the component mounts
+  // Call fetchProduct when the component mounts or id changes
   useEffect(() => {
     fetchProduct();
-  }, [id]);
+  }, [fetchProduct]); // Dependency: fetchProduct (now stable)
 
   if (!product) {
     return <div>Loading...</div>;
